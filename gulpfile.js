@@ -3,10 +3,10 @@ const sass = require('gulp-sass')
 const browserSync = require('browser-sync')
 const cp = require('child_process')
 const jsYaml = require('js-yaml')
-const jekyll = process.platform === 'win32' ? 'jekyll.bat' : 'jekyll'
 const fs = require('fs')
 const path = require('path')
 
+// configs and paths and such
 const _configPath = path.resolve(__dirname, '_config.yml')
 const _config = jsYaml.safeLoad(fs.readFileSync(_configPath))
 const _paths = {
@@ -18,15 +18,17 @@ const _paths = {
   }
 }
 
-const _messages = {
-  jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
-}
-
-gulp.task('build-jekyll', function (done) {
-  // browserSync.notify(_messages.jekyllBuild)
-  return cp.spawn(jekyll , ['build', '--config', _configPath, '--incremental'], { stdio: 'inherit' })
+// jekyll building
+function buildJekyll (done) {
+  const jekyll = process.platform === 'win32' ? 'jekyll.bat' : 'jekyll'
+  cp.spawn(jekyll, ['build', '--config', _configPath, '--incremental'], { stdio: 'inherit' })
     .on('close', done)
-})
+}
+function watchJekyll (done) {
+  // need to ignore .jekyll-metadata otherwise, infinite loop
+  gulp.watch([_configPath, _paths.src], { usePolling: true, ignored: /\.jekyll-metadata/ }, buildJekyll)
+    .on('all', console.log)
+}
 
 // CSS stuff
 function buildCss () {
@@ -63,7 +65,10 @@ function watchServer () {
   gulp.watch(_paths.dest, { usePolling: true }, reloadServer)
 }
 
+// tasks
 gulp.task('develop', gulp.series(
   startServer,
-  gulp.parallel(watchServer, watchCss)
+  gulp.parallel(watchServer, watchJekyll, watchCss)
 ))
+
+gulp.task('test', watchJekyll)
