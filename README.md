@@ -1,16 +1,28 @@
-# Local Development for Cloudcannon
+# Repository for 9tailors Site
 
-This is a boilerplate for developing Jekyll site for deployment onto Cloudcannon
+This repository is set up to be managed by Cloudcannon and also provide a way to develop locally.
 
 ## Install
+- Clone this git repository
+- Change directory into the directory
+- Make sure you have current versions of [Ruby](https://www.ruby-lang.org/en/downloads/), [Rubygems](https://rubygems.org/pages/download) and [NPM](https://www.npmjs.com) installed.
+- Install jekyll bundler: `gem install jekyll bundler`
+- Install the bundle: `bundle install`
+- Install the npm modules `npm install`
 
-1. Clone this git repository into your project directory
-1. Change directory into the directory
-1. Make sure you have current versions of [Ruby](https://www.ruby-lang.org/en/downloads/), [Rubygems](https://rubygems.org/pages/download) and [NPM](https://www.npmjs.com) installed.
-1. Install jekyll bundler: `gem install jekyll bundler`
-1. Install the bundle: `bundle install`
-1. Install the npm modules `npm install`
+## Local Development
+- Checkout the `cloudcannon` branch
+- Pull in any changes
+- Make changes
+- Commit the changes to `cloudcannon`
 
-## Development
+## Cloudcannon content management
+- The `cloudcannon` branch should be automatically synched
+- Any changes will be checked into that branch
+- If needed, do a refresh from the admin ui
 
-1. Run `npm start`
+## Deployment
+- Pull in `master` and `cloudcannon`
+- Merge changes from `cloudcannon` into `master`
+- Do a build: `npm run build`
+- Push changes to `master`
