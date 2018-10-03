@@ -1,1 +1,3 @@
-console.log('here')
+import foo from './foo'
+console.log('javascript is working!')
+

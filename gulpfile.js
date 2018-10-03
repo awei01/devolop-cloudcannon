@@ -1,9 +1,12 @@
 const gulp = require('gulp')
 const sass = require('gulp-sass')
+const plumber = require('gulp-plumber')
 const browserSync = require('browser-sync')
 const cp = require('child_process')
 const _paths = require('./_paths.js')
 const through = require('through2')
+const webpack = require('webpack-stream')
+const webpackConfig = require('./webpack.config.js')
 
 /*
 |--------------------
@@ -38,15 +41,9 @@ function buildCss () {
   // output it to jekyll folder and let jekyll take care of copying
   // need to use glob pattern to grab all files
   return gulp.src(`${_paths.scss.src}/**`)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(through.obj(function (file, encoding, cb) {
-      // need to prepend the file with frontmatter so jekyll doesn't convert to binary file
-      if (!file.isNull()) {
-        const result = '---\n---\n' + file.contents.toString()
-        file.contents = Buffer.from(result)
-      }
-      cb(null, file)
-    }))
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(_prependFrontmatter())
     .pipe(gulp.dest(_paths.scss.dest))
 }
 function watchCss () {
@@ -61,7 +58,11 @@ function watchCss () {
 function buildJs () {
   // output it to jekyll folder and let jekyll take care of copying
   return gulp.src(_paths.js.src)
-    .pipe(sass().on('error', sass.logError))
+    .pipe(plumber({
+      errorHandler: _handleError
+    }))
+    .pipe(webpack(webpackConfig))
+    .pipe(_prependFrontmatter())
     .pipe(gulp.dest(_paths.js.dest))
 }
 function watchJs () {
@@ -90,6 +91,9 @@ function watchServer () {
   // need usePolling for my VM environment
   gulp.watch(_paths.dest, { usePolling: true }, reloadServer)
 }
+function _handleError (error) {
+  server.notify(error.message, 10000)
+}
 
 /*
 |--------------------
@@ -100,7 +104,20 @@ gulp.task('develop', gulp.series(
   gulp.parallel(buildCss, buildJs),
   buildJekyll,
   startServer,
-  gulp.parallel(watchServer, watchJekyllConfig, watchJekyllSrc, watchCss)
+  gulp.parallel(watchServer, watchJekyllConfig, watchJekyllSrc, watchCss, watchJs)
 ))
 
-gulp.task('test', watchJs)
+gulp.task('test', buildJs)
+
+
+// utilities
+function _prependFrontmatter () {
+  return through.obj(function (file, encoding, cb) {
+    // need to prepend the file with frontmatter so jekyll doesn't convert to binary file
+    if (!file.isNull()) {
+      const result = '---\n---\n' + file.contents.toString()
+      file.contents = Buffer.from(result)
+    }
+    cb(null, file)
+  })
+}
