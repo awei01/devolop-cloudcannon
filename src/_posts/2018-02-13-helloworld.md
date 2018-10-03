@@ -1,10 +1,10 @@
 ---
 layout: default
-title:  "This is a post"
-categories: category1
-custom: "This is  variable. asdf"
+title:  Hello World
 ---
 
 # Yay, this is a post.
+
 {{page.date}}
+
 {{page.custom}}

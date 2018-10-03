@@ -2,9 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>{{site.description}}</title>
+  <title>{{site.title}}</title>
 
-  <meta name="description" content="{{page.description}}">
   <meta chartset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width initial-scale=1">
@@ -12,10 +11,18 @@
   <link rel="stylesheet", href="/css/main.css">
 </head>
 <body>
-  funkster
+  {% include _banner.html %}
 
-  {{content}}
-  {{site.data.content[0].text}}
+  <h2>Pages</h2>
+  <ul>
+    <li><a href="/">Home</a></li>
+  {% for page in site.pages %}
+    <li><a href="{{ page.url }}">{{ page.title }}</a>
+  {% endfor %}
+  </ul>
+
+  <div class="content">{{content}}</div>
+
   <script src="/js/main.js"></script>
 </body>
 </html>

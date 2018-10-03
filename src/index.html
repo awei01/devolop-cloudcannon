@@ -1,22 +1,18 @@
 ---
-title: Startseite
-description: Hello World
-
+title: Home
 layout: default
-position_in_mainnav: 1
+description: This is a description
 ---
 
 <!-- Include partials like a navigation from the _includes folder. -->
-{% include _mainnav.html %}
-
-
-<div class="full-page">
+<div>
 	<h1>{{page.title}}</h1>
 	<h2>{{page.description}}</h2>
 </div>
 
 <!-- List of all posts -->
 
+<h2>Posts</h2>
 <ul>
   {% for post in site.posts %}
     <li>

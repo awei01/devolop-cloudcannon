@@ -4,7 +4,7 @@
 source: src
 destination: dist
 # Include  _pages
-# include: ["_pages"]
+include: ["_pages"]
 
 # -------------------------
 # Site variables available to liquid templates
@@ -34,6 +34,10 @@ _options:
 # -------------------------
 # Collections
 # -------------------------
+collections:
+  pages:
+    output: true
+    permalink: /:slug.html
 
 # -------------------------
 # Collection default settings
