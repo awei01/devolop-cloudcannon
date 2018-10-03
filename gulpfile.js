@@ -9,6 +9,14 @@ const path = require('path')
 
 const _configPath = path.resolve(__dirname, '_config.yml')
 const _config = jsYaml.safeLoad(fs.readFileSync(_configPath))
+const _paths = {
+  src: path.resolve(__dirname, _config.source),
+  dest: path.resolve(__dirname, _config.destination),
+  scss: {
+    src: path.resolve(__dirname, 'scss', '**'),
+    dest: path.resolve(__dirname, _config.source, 'assets', 'css')
+  }
+}
 
 const _messages = {
   jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
@@ -20,24 +28,42 @@ gulp.task('build-jekyll', function (done) {
     .on('close', done)
 })
 
-gulp.task('build-css', function () {
-  const input = path.resolve(__dirname, 'scss', '**')
+// CSS stuff
+function buildCss () {
   // output it to jekyll folder and let jekyll take care of copying
-  const output = path.resolve(__dirname, _config.source, 'assets', 'css')
-  return gulp.src(input)
+  return gulp.src(_paths.scss.src)
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(output))
-})
+    .pipe(gulp.dest(_paths.scss.dest))
+}
+function watchCss () {
+  gulp.watch(_paths.scss.src, { usePolling: true }, buildCss)
+}
 
-gulp.task('build', gulp.series('build-css'), function (done) {
+gulp.task('build', gulp.series(buildCss), function (done) {
   console.log('building')
   done()
 })
 
-gulp.task('browser-sync', gulp.series('build'), function() {
-  browserSync({
+// browser stuff
+const server = browserSync.create()
+function reloadServer (done) {
+  server.reload()
+  done()
+}
+function startServer (done) {
+  server.init({
     server: {
-      baseDir: path.resolve(_config.destination)
+      baseDir: _paths.dest
     }
   })
-})
+  done()
+}
+function watchServer () {
+  // need usePolling for my VM environment
+  gulp.watch(_paths.dest, { usePolling: true }, reloadServer)
+}
+
+gulp.task('develop', gulp.series(
+  startServer,
+  gulp.parallel(watchServer, watchCss)
+))
