@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{page.title}}</title>
+
+  <meta name="description" content="{{page.description}}">
+  <meta chartset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <link rel="apple-touch-icon" href="{{ site.url }}/assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="{{ site.url }}/assets/img/favicon.png">
+  <link rel="stylesheet", href="{{ site.url }}/assets/main.css">
+</head>
+<body>
+  {{content}}
+  {{site.data.content[0].text}}
+  <script src="/assets/main.js"></script>
+</body>
+</html>

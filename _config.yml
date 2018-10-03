@@ -1,0 +1,49 @@
+# -------------------------
+# Jekyll configs
+# -------------------------
+source: src
+destination: dist
+# Include  _pages
+# include: ["_pages"]
+
+# -------------------------
+# Site variables available to liquid templates
+# -------------------------
+title: The Page Title
+description: The page description
+
+# -------------------------
+# Cloudcannon global editor options
+# -------------------------
+_options:
+  content:
+    # format: p h1 h2 h3 h4 h5 h6 pre address div
+    format: p h1 h2 h3
+    undo: true
+    redo: true
+    bold: true
+    italic: true
+    removeformat: true
+    underline: true
+    blockquote: true
+    strike: true
+    link: true
+    image: true
+    # styles: /cloudcannon/content.css
+
+# -------------------------
+# Collections
+# -------------------------
+
+# -------------------------
+# Collection default settings
+# -------------------------
+# defaults:
+#   - scope:
+#       path: ""
+#       type: posts
+#     values:
+#       layout: post
+#       _hide_title: true
+#     # _comments:
+#     #   title: Post title

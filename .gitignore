@@ -1,0 +1,13 @@
+# Jekyll
+.sass-cache/
+dist
+
+# Node
+node_modules
+package-lock.json
+
+# Ruby
+Gemfile.lock
+
+# System
+.DS_Store
