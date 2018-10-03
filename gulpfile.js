@@ -7,12 +7,17 @@ const _paths = require('./_paths.js')
 const through = require('through2')
 const webpack = require('webpack-stream')
 const webpackConfig = require('./webpack.config.js')
+const del = require('del')
 
 /*
 |--------------------
 | jekyll building
 | -------------------
 */
+function cleanDest () {
+  return del(_paths.dest)
+}
+
 function buildJekyll (done) {
   const jekyll = process.platform === 'win32' ? 'jekyll.bat' : 'jekyll'
   cp.spawn(jekyll, ['build', '--config', _paths.config], { stdio: 'inherit' })
@@ -100,14 +105,20 @@ function _handleError (error) {
 | Tasks definition
 | ---------------------
 */
-gulp.task('develop', gulp.series(
+gulp.task('build', gulp.series(
+  // clean the folder
+  cleanDest,
+  // build css and js simultaneously
   gulp.parallel(buildCss, buildJs),
-  buildJekyll,
+  // then build jekyll
+  buildJekyll
+))
+
+gulp.task('develop', gulp.series(
+  'build',
   startServer,
   gulp.parallel(watchServer, watchJekyllConfig, watchJekyllSrc, watchCss, watchJs)
 ))
-
-gulp.task('test', buildJs)
 
 
 // utilities

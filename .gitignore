@@ -1,6 +1,7 @@
 # Jekyll
 .sass-cache/
 dist
+src/.jekyll-metadata
 
 # Node
 node_modules

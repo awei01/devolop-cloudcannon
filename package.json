@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "./node_modules/.bin/gulp develop",
-    "build": "(start webpack -p --mode production & jekyll build) || webpack -p --mode production & jekyll build"
+    "build": "./node_modules/.bin/gulp build"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "babel-loader": "^8.0.4",
     "browser-sync": "^2.24.7",
     "child_process": "^1.0.2",
+    "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-plumber": "^1.2.0",
     "gulp-sass": "^4.0.1",
