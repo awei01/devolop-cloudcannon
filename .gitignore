@@ -8,6 +8,7 @@ package-lock.json
 
 # Ruby
 Gemfile.lock
+vendor
 
 # System
 .DS_Store

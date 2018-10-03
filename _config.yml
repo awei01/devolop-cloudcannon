@@ -9,8 +9,8 @@ destination: dist
 # -------------------------
 # Site variables available to liquid templates
 # -------------------------
-title: The Page Title
-description: The page description
+title: The test awer
+description: The page duck
 
 # -------------------------
 # Cloudcannon global editor options
