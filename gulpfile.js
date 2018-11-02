@@ -44,7 +44,7 @@ function watchJekyllConfig (done) {
 function watchJekyllSrc (done) {
   // need to ignore .jekyll-metadata otherwise, infinite loop
   // watch the src except for the js and css folders (we will push js and css files directly to the dist folder)
-  gulp.watch([`${_paths.src}/!(js|css)`], { usePolling: true, ignored: /\.jekyll-metadata/, queue: false, delay: 500 }, buildIncrementalJekyll)
+  gulp.watch([`${_paths.src}/**`], { usePolling: true, ignored: /(\.jekyll-metadata|js|css)/, queue: false, delay: 500 }, buildIncrementalJekyll)
 }
 
 /*
