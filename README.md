@@ -1,4 +1,4 @@
-# Repository for 9tailors Site
+# Boilerplate for developing using cloudcannon and jekyll
 
 This repository is set up to be managed by Cloudcannon and also provide a way to develop locally.
 
