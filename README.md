@@ -10,19 +10,6 @@ This repository is set up to be managed by Cloudcannon and also provide a way to
 - Install the bundle: `bundle install`
 - Install the npm modules `npm install`
 
-## Local Development
-- Checkout the `cloudcannon` branch
-- Pull in any changes
-- Make changes
-- Commit the changes to `cloudcannon`
-
-## Cloudcannon content management
-- The `cloudcannon` branch should be automatically synched
-- Any changes will be checked into that branch
-- If needed, do a refresh from the admin ui
-
-## Deployment
-- Pull in `master` and `cloudcannon`
-- Merge changes from `cloudcannon` into `master`
-- Do a build: `npm run build`
-- Push changes to `master`
+## Eject
+- Delete `.git`
+- Reinitialize git: `git init`
