@@ -1,10 +1,4 @@
 ---
 ---
 body {
-  font-family: arial, helvetica, sans-serif;
-  margin: 2em; }
-
-.content {
-  border: 2px solid #ccc;
-  padding: 2em;
-  border-radius: 1em; }
+  font-family: arial, helvetica, sans-serif; }

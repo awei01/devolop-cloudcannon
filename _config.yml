@@ -3,14 +3,19 @@
 # -------------------------
 source: src
 destination: dist
-# Include  _pages
-include: ["_pages"]
+timezone: America/New_York
 
 # -------------------------
 # Site variables available to liquid templates
 # -------------------------
-title: The test awer
-description: The page duck
+title: Site Title
+description: Site Description
+favicon: http://res.cloudinary.com/l9tl/v1472846223/identity/short-logo.png
+telephone: 617.286.6135
+emails:
+  info: info@9tailors.com
+  customerservice: customerservice@9tailors.com
+  weddings: weddings@9tailors.com
 
 # -------------------------
 # Cloudcannon global editor options
@@ -37,17 +42,27 @@ _options:
 collections:
   pages:
     output: true
-    permalink: /:slug.html
+  gallery:
+    output: true
 
 # -------------------------
 # Collection default settings
 # -------------------------
-# defaults:
-#   - scope:
-#       path: ""
-#       type: posts
-#     values:
-#       layout: post
-#       _hide_title: true
-#     # _comments:
-#     #   title: Post title
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: _gallery
+    values:
+      layout: gallery
+    # _comments:
+    #   title: Post title
+
+# -------------------------
+# kramdown settings
+# -------------------------
+kramdown:
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  # handle ellipsis
